@@ -2788,3 +2788,29 @@ img {
   border-radius: 999px; padding: 4px 12px; font-size: 12px; cursor: pointer;
 }
 @media (max-width: 720px) { .led3d-stage { height: 280px; } }
+
+/* ===== Нийт схем (EventSchema) ===== */
+.event-schema{margin-top:24px;border:1px solid #cfe2f3;border-radius:14px;background:#f7fbff;padding:16px;color:#17324b}
+.event-schema-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:12px}
+.event-schema-head strong{font-size:16px}
+.event-schema-head span{font-size:13px;color:#5b7790}
+.event-schema-tabs{margin-left:auto;display:flex;gap:4px;background:#e6f0fa;border-radius:9px;padding:3px}
+.event-schema-tabs button{border:0;background:transparent;color:#17324b;font-weight:700;font-size:12px;padding:6px 14px;border-radius:7px;cursor:pointer}
+.event-schema-tabs button.on{background:#2f86d0;color:#fff}
+.event-schema-warn{margin:0 0 12px;padding:10px 14px 10px 28px;background:#fff7e6;border:1px solid #f5d08a;border-radius:10px;color:#8a5a00;font-size:13px}
+.event-schema-view{margin-bottom:14px}
+.event-schema-view>span{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6b869c;margin-bottom:6px}
+.event-schema-view svg{width:100%;height:auto;display:block;border:1px solid #dbe8f4;border-radius:10px;background:#fff}
+.event-schema-3d{margin-bottom:14px;border-radius:12px;overflow:hidden;border:1px solid #1d2b45;background:#0b1220}
+.event-schema-3d-canvas{height:520px;cursor:grab;touch-action:none}
+.event-schema-3d-canvas:active{cursor:grabbing}
+.event-schema-3d-error{color:#f87171;padding:20px;margin:0}
+.event-schema-3d-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 10px;background:#0e1830;color:#8aa0bd;font-size:12px}
+.event-schema-3d-bar span{margin-right:auto}
+.event-schema-3d-bar button{border:0;background:#1d2b45;color:#e6eef8;border-radius:7px;padding:6px 10px;font-size:12px;cursor:pointer}
+.event-schema-legend{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:10px;overflow:hidden}
+.event-schema-legend th,.event-schema-legend td{padding:7px 10px;border-bottom:1px solid #e3eef8;text-align:left}
+.event-schema-legend th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#6b869c;background:#f1f7fd}
+.event-schema-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:middle}
+@media(max-width:700px){.event-schema-3d-canvas{height:380px}}
+@media print{.event-schema{break-inside:avoid;border:0;background:#fff}.event-schema-view svg{border:0}.event-schema-tabs,.event-schema-3d-bar{display:none}}

@@ -4,6 +4,7 @@ import * as XLSX from "xlsx";
 import LedDimensionDiagram from "./LedDimensionDiagram.jsx";
 import Product360 from "./Product360.jsx";
 import LedDiagramPanel from "./LedDiagramPanel.jsx";
+import EventSchema from "./EventSchema.jsx";
 
 import {
   ArrowRight,
@@ -868,11 +869,13 @@ function QuoteSection({
                   <td><strong>{getAmount(item).toLocaleString("mn-MN")}</strong></td>
                   {admin && <><td>{formatMoney(price)}</td><td><strong>{formatMoney(getAmount(item) * price)}</strong></td></>}
                   <td className="quote-no-print"><button className="quote-remove" type="button" onClick={() => removeItem(index)} aria-label={`${item.name} устгах`}><Trash2 size={15} /></button></td>
-                </tr>{hasDimensions(item) && showsDiagram(item.name) && <tr className="quote-diagram-row"><td colSpan={admin ? (hasLed ? 10 : 8) : (hasLed ? 8 : 6)}><LedDimensionDiagram width={item.width} height={item.height} quantity={item.quantity} measurement={item.measurement} curved={isCurved(item.name)} cube={isCube(item.name)} /></td></tr>}</React.Fragment>;
+                </tr>{hasDimensions(item) && showsDiagram(item.name) && <tr className="quote-diagram-row"><td colSpan={admin ? (hasLed ? 10 : 8) : (hasLed ? 8 : 6)}><LedDiagramPanel width={item.width} height={item.height} quantity={item.quantity} measurement={item.measurement} curved={isCurved(item.name)} cube={isCube(item.name)} /></td></tr>}</React.Fragment>;
               })}
             </tbody>
           </table>
         </div>
+
+        <EventSchema items={items} products={products} />
 
         {admin ? (
           <>
@@ -896,7 +899,7 @@ function QuoteSection({
           <div className="quote-customer-note">
             <div><p>Таны хүсэлт Admin-д очно. Admin үнэ баталгаажуулсны дараа үнийн санал энэ хэсэгт автоматаар харагдана.</p>
               {quoteStatus?.status === "pending" && <p className="quote-status-message">Таны хүсэлт хүлээн авлаа. Админ үнийн санал боловсруулж байна.</p>}
-              {quoteStatus?.status === "approved" && quoteStatus.approvedPrices && <div className="approved-quote"><h3>Таны баталгаажсан үнийн санал</h3>{quoteStatus.items.map((item, i) => { const amountValue = item.measurement === "cabinet" ? Math.ceil(item.width / .5) * Math.ceil(item.height / .5) * item.quantity : item.unit === "м²" ? item.width * item.height * item.quantity : item.quantity; const price = Number(quoteStatus.approvedPrices.prices[item.name]) || 0; return <div className="approved-quote-item" key={i}><p>{item.name} — {amountValue} {item.measurement === "cabinet" ? "ш" : item.unit}: <strong>{formatMoney(amountValue * price)}</strong></p>{item.width && item.height && showsDiagram(item.name) && <LedDimensionDiagram width={item.width} height={item.height} quantity={item.quantity} measurement={item.measurement} curved={isCurved(item.name)} cube={isCube(item.name)} />}</div>; })}<p>Суурилуулалт: <strong>{formatMoney(quoteStatus.approvedPrices.installation ? quoteStatus.approvedPrices.installationFee : 0)}</strong></p><h3>Нийт: {formatMoney(quoteStatus.items.reduce((sum,item)=>{const amountValue=item.measurement==="cabinet"?Math.ceil(item.width/.5)*Math.ceil(item.height/.5)*item.quantity:item.unit==="м²"?item.width*item.height*item.quantity:item.quantity;return sum+amountValue*(Number(quoteStatus.approvedPrices.prices[item.name])||0)},0)+(quoteStatus.approvedPrices.installation?quoteStatus.approvedPrices.installationFee:0))}</h3>{quoteStatus.approvedPrices.note && <p>{quoteStatus.approvedPrices.note}</p>}</div>}
+              {quoteStatus?.status === "approved" && quoteStatus.approvedPrices && <div className="approved-quote"><h3>Таны баталгаажсан үнийн санал</h3>{quoteStatus.items.map((item, i) => { const amountValue = item.measurement === "cabinet" ? Math.ceil(item.width / .5) * Math.ceil(item.height / .5) * item.quantity : item.unit === "м²" ? item.width * item.height * item.quantity : item.quantity; const price = Number(quoteStatus.approvedPrices.prices[item.name]) || 0; return <div className="approved-quote-item" key={i}><p>{item.name} — {amountValue} {item.measurement === "cabinet" ? "ш" : item.unit}: <strong>{formatMoney(amountValue * price)}</strong></p>{item.width && item.height && showsDiagram(item.name) && <LedDiagramPanel width={item.width} height={item.height} quantity={item.quantity} measurement={item.measurement} curved={isCurved(item.name)} cube={isCube(item.name)} />}</div>; })}<p>Суурилуулалт: <strong>{formatMoney(quoteStatus.approvedPrices.installation ? quoteStatus.approvedPrices.installationFee : 0)}</strong></p><h3>Нийт: {formatMoney(quoteStatus.items.reduce((sum,item)=>{const amountValue=item.measurement==="cabinet"?Math.ceil(item.width/.5)*Math.ceil(item.height/.5)*item.quantity:item.unit==="м²"?item.width*item.height*item.quantity:item.quantity;return sum+amountValue*(Number(quoteStatus.approvedPrices.prices[item.name])||0)},0)+(quoteStatus.approvedPrices.installation?quoteStatus.approvedPrices.installationFee:0))}</h3>{quoteStatus.approvedPrices.note && <p>{quoteStatus.approvedPrices.note}</p>}</div>}
             </div>
             <button type="button" className="btn btn-primary" disabled={!items.length || !customer.name.trim() || !customer.phone.trim() || !customer.email.trim() || submittingQuote} onClick={submitQuoteRequest}>{submittingQuote ? "Илгээж байна..." : "Үнийн санал хүсэх"} <ArrowUpRight size={17} /></button>
             {quoteSubmitError && <p className="quote-status-message">{quoteSubmitError}</p>}
