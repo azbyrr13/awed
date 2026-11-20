@@ -1,0 +1,5 @@
+
+User-agent: *
+Allow: /
+
+Sitemap: https://led-mongolia.vercel.app/sitemap.xml

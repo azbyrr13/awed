@@ -1,0 +1,40 @@
+
+{
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "api/admin/prices.js": {
+      "maxDuration": 30
+    },
+    "api/admin/quotes.js": {
+      "maxDuration": 30
+    },
+    "api/admin/quotes/[id].js": {
+      "maxDuration": 30
+    },
+    "api/admin/settings.js": {
+      "maxDuration": 30
+    },
+    "api/quotes.js": {
+      "maxDuration": 30
+    },
+    "api/quotes/[id].js": {
+      "maxDuration": 30
+    }
+  }
+}
